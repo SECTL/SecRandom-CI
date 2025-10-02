@@ -30,6 +30,17 @@ public class SecRandomNotification : NotificationProviderBase
         WriteIndented = true,
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
+    private DateTime _lastStatusMessageTime = DateTime.MinValue;
+    private static readonly TimeSpan _breakingMessageInterval = TimeSpan.FromMilliseconds(800); // Breaking状态下0.8秒发送一次状态消息
+    private static readonly TimeSpan _onClassMessageInterval = TimeSpan.FromSeconds(10); // OnClass状态下10秒发送一次状态消息
+    private string _lastCurrentSubject = "";
+    private string _lastNextSubject = "";
+    private string _lastCurrentState = "";
+    private bool _lastIsClassPlanEnabled = false;
+    private bool _lastIsClassPlanLoaded = false;
+    private bool _lastIsLessonConfirmed = false;
+    private double _lastOnClassLeftTime = 0;
+    private double _lastOnBreakingTimeLeft = 0;
 
     public SecRandomNotification(ILessonsService lessonsService)
     {
@@ -39,8 +50,25 @@ public class SecRandomNotification : NotificationProviderBase
 
     private void LessonsServiceOnOnTicked(object? sender, EventArgs e)
     {
-        // 发送课程状态消息
-        SendClassStatusMessage();
+        // 发送课程状态消息，但根据课程状态使用不同的发送频率
+        TimeSpan currentInterval;
+        string currentState = LessonsService.CurrentState.ToString();
+        
+        // 根据课程状态选择不同的时间间隔
+        if (currentState == "Breaking")
+        {
+            currentInterval = _breakingMessageInterval; // Breaking状态下0.8秒发送一次
+        }
+        else
+        {
+            currentInterval = _onClassMessageInterval; // 其他状态下10秒发送一次
+        }
+        
+        if (DateTime.Now - _lastStatusMessageTime >= currentInterval)
+        {
+            SendClassStatusMessage();
+            _lastStatusMessageTime = DateTime.Now;
+        }
         
         // 接收并处理消息
         string result = Path.GetTempPath();
@@ -309,10 +337,6 @@ public class SecRandomNotification : NotificationProviderBase
     {
         try
         {
-            string tempPath = Path.GetTempPath();
-            string messageFile = Path.Combine(tempPath, "SecRandom_message_received.json");
-            string unreadFile = Path.Combine(tempPath, "SecRandom_unread_received");
-            
             // 获取当前课程状态信息
             // 课程服务具有以下属性：
             string currentSubject = LessonsService.CurrentSubject?.Name ?? "无";     // Subject? 当前所处时间点的科目。如果没有加载课表，则为 null。
@@ -323,6 +347,37 @@ public class SecRandomNotification : NotificationProviderBase
             bool isLessonConfirmed = LessonsService.IsLessonConfirmed;                       // bool 是否已确定当前时间点。
             double onClassLeftTime = LessonsService.OnClassLeftTime.TotalSeconds;           // TimeSpan 距离上课剩余时间（秒）。
             double onBreakingTimeLeft = LessonsService.OnBreakingTimeLeftTime.TotalSeconds; // TimeSpan 距下课剩余时间（秒）。
+            
+            // 检查课程状态是否发生变化
+            bool statusChanged = 
+                _lastCurrentSubject != currentSubject ||
+                _lastNextSubject != nextSubject ||
+                _lastCurrentState != currentState ||
+                _lastIsClassPlanEnabled != isClassPlanEnabled ||
+                _lastIsClassPlanLoaded != isClassPlanLoaded ||
+                _lastIsLessonConfirmed != isLessonConfirmed ||
+                Math.Abs(_lastOnClassLeftTime - onClassLeftTime) > 1 || // 时间变化超过1秒才认为有变化
+                Math.Abs(_lastOnBreakingTimeLeft - onBreakingTimeLeft) > 1; // 时间变化超过1秒才认为有变化
+            
+            // 如果状态没有变化，则不发送消息
+            if (!statusChanged)
+            {
+                return;
+            }
+            
+            // 更新最后的状态值
+            _lastCurrentSubject = currentSubject;
+            _lastNextSubject = nextSubject;
+            _lastCurrentState = currentState;
+            _lastIsClassPlanEnabled = isClassPlanEnabled;
+            _lastIsClassPlanLoaded = isClassPlanLoaded;
+            _lastIsLessonConfirmed = isLessonConfirmed;
+            _lastOnClassLeftTime = onClassLeftTime;
+            _lastOnBreakingTimeLeft = onBreakingTimeLeft;
+            
+            string tempPath = Path.GetTempPath();
+            string messageFile = Path.Combine(tempPath, "SecRandom_message_received.json");
+            string unreadFile = Path.Combine(tempPath, "SecRandom_unread_received");
             
             // 创建课程状态消息
             var classStatus = new
