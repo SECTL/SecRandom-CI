@@ -7,6 +7,6 @@ name: SecRandom-CI
 description: SecRandom x ClassIsland联动插件
 entranceAssembly: "SecRandom-CI.dll"
 url: https://github.com/SECTL/SecRandom-CI
-version: 1.0.0.0
+version: 1.0.0.1
 apiVersion: 1.6.0.5
 author: SECTL
