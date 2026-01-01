@@ -19,19 +19,16 @@ public class SecRandomNotificationProvider : NotificationProviderBase
         var names = result.SelectedStudents
             .Select(student => student.StudentName)
             .Join() ?? "???";
-        Console.WriteLine($"============> {names}");
         
         Dispatcher.UIThread.Invoke(() =>
         {
             if (_request != null)
             {
-                Console.WriteLine("============> 复用提醒");
                 var content = (TwoIconsMaskTemplateData?)_request.MaskContent.Content;
                 content?.Text = $"点名结果: {names}";
                 return;
             }
             
-            Console.WriteLine($"============> 提醒时长{result.DisplayDuration}");
             _request = new NotificationRequest
             {
                 MaskContent = NotificationContent.CreateTwoIconsMask(
@@ -39,6 +36,7 @@ public class SecRandomNotificationProvider : NotificationProviderBase
                     factory: x =>
                     {
                         x.Duration = TimeSpan.FromSeconds(result.DisplayDuration);
+                        x.IsSpeechEnabled = false;
                     }),
             };
             _request.CompletedToken.Register(() => _request = null);
