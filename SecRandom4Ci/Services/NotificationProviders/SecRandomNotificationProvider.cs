@@ -9,7 +9,7 @@ using NotificationRequest = ClassIsland.Core.Models.Notification.NotificationReq
 
 namespace SecRandom4Ci.Services.NotificationProviders;
 
-[NotificationProviderInfo("1A46E9B1-F1B5-4FAA-9EF2-1C47FB92F8C3", "点名结果", "\uECB7", "点名结果。")]
+[NotificationProviderInfo("A0C99B32-EFA4-4843-ADF6-54DE7C6FCD56", "SecRandom抽选结果", "\uECB7", "显示SecRandom的抽选结果")]
 public class SecRandomNotificationProvider : NotificationProviderBase
 {
     private NotificationRequest? _request = null;
