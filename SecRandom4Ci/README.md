@@ -26,6 +26,6 @@
 
 ## 📄 许可证
 
-本插件采用 **MIT** 许可证，详情请查看 [LICENSE](LICENSE) 文件。
+本插件采用 **MIT** 许可证。
 
 Copyright © 2025-2026 SECTL.
