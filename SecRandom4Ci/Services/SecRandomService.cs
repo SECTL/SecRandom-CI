@@ -25,4 +25,9 @@ public class SecRandomService : ISecRandomService
     {
         SecRandomNotificationProvider.ShowResult(result);
     }
+
+    public string IsAlive()
+    {
+        return "Yes";
+    }
 }
