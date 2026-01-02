@@ -15,7 +15,7 @@
 
 ## 📋 系统要求
 
-- **SecRandom版本**：需 ≥ v1.3.0.0
+- **SecRandom版本**：需 ≥ v2.1.0
 - **配置要求**：在SecRandom 闪抽/即抽 设置中启用 对应的 ClassIsland 联动功能
 
 ## 🚀 安装与使用
@@ -26,6 +26,6 @@
 
 ## 📄 许可证
 
-本插件采用 **MIT** 许可证，详情请查看 [LICENSE](LICENSE) 文件。
+本插件采用 **MIT** 许可证。
 
-Copyright © 2025 SECTL.
+Copyright © 2025-2026 SECTL.
