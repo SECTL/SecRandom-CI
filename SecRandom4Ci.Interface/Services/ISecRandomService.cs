@@ -7,5 +7,7 @@ namespace SecRandom4Ci.Interface.Services;
 public interface ISecRandomService
 {
     void NotifyResult(CallResult result);
+    void ShowNotification(NotificationData data);
+    Version GetPluginVersion();
     string IsAlive();
 }
