@@ -20,6 +20,6 @@ public class ResetRecordAction : ActionBase<ResetRecordActionSettings>
         
         if (url == string.Empty) return;
 
-        _ = SecRandomIpcSendUrl.SendUrlAsync(url);
+        await SecRandomIpcSendUrl.SendUrlAsync(url);
     }
 }
