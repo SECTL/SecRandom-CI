@@ -6,11 +6,13 @@ using ClassIsland.Shared;
 using SecRandom4Ci.Services.NotificationProviders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SecRandom4Ci.Controls.Automations.ActionSettingsControls;
 using SecRandom4Ci.Controls.Automations.RuleSettingsControls;
 using SecRandom4Ci.Models.Automations.Rules;
 using SecRandom4Ci.Models.Automations.Triggers;
 using SecRandom4Ci.Services;
 using SecRandom4Ci.Services.Automations;
+using SecRandom4Ci.Services.Automations.Actions;
 
 namespace SecRandom4Ci;
 
@@ -32,6 +34,7 @@ public class Plugin : PluginBase
         services.AddTrigger<ReceivedNotificationTrigger>();
         services.AddRule<LastCalledPersonRuleSettings, LastCalledPersonRuleSettingsControl>(
             "secrandom4ci.rules.lastCalledPerson", "SecRandom 上次抽到", "\uECF9");
+        services.AddAction<ResetRecordAction, ResetRecordActionSettingsControl>();
 
         AppBase.Current.AppStarted += (sender, args) =>
         {
