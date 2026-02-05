@@ -9,7 +9,7 @@ public partial class LastCalledPersonRuleSettings : ObservableRecipient
     [ObservableProperty] private bool _onLottery = true;
     
     [ObservableProperty] private bool _filterByPersonName = true;
-    [ObservableProperty] private string _personName = string.Empty;
+    [ObservableProperty] private string _personName = "学生21";
     
     [ObservableProperty] private bool _filterByGroupName = false;
     [ObservableProperty] private string _groupName = string.Empty;
