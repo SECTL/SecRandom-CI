@@ -1,0 +1,69 @@
+﻿<ci:RuleSettingsControlBase x:Class="SecRandom4Ci.Controls.Automations.RuleSettingsControls.LastCalledPersonRuleSettingsControl"
+                            x:TypeArguments="ruleSettings:LastCalledPersonRuleSettings"
+                            xmlns="https://github.com/avaloniaui"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:ci="http://classisland.tech/schemas/xaml/core"
+                            xmlns:local="using:SecRandom4Ci.Controls.Automations.RuleSettingsControls"
+                            xmlns:ruleSettings="using:SecRandom4Ci.Models.Automations.Rules"
+                            mc:Ignorable="d">
+    <ci:RuleSettingsControlBase.Resources>
+        <ScrollViewer x:Key="SettingsDrawer" x:Shared="False" Width="400"
+                      d:DataContext="{d:DesignInstance local:LastCalledPersonRuleSettingsControl}">
+            <StackPanel Classes="animated-intro" Spacing="8">
+                <ci:Field Label="结果类型">
+                    <ListBox Theme="{StaticResource ChipListBoxTheme}" HorizontalAlignment="Left" SelectionMode="Multiple,Toggle">
+                        <ListBoxItem IsSelected="{Binding Settings.OnRollCall}">
+                            <ci:IconText Glyph="&#xED1D;" Text="点名" />
+                        </ListBoxItem>
+                        <ListBoxItem IsSelected="{Binding Settings.OnQuickDraw}">
+                            <ci:IconText Glyph="&#xED1F;" Text="闪抽" />
+                        </ListBoxItem>
+                        <ListBoxItem IsSelected="{Binding Settings.OnLottery}">
+                            <ci:IconText Glyph="&#xED33;" Text="抽奖" />
+                        </ListBoxItem>
+                    </ListBox>
+                </ci:Field>
+                
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Settings.FilterByPersonName}">
+                        按姓名筛选
+                    </CheckBox>
+                    <TextBox Text="{Binding Settings.PersonName}"
+                             IsVisible="{Binding Settings.FilterByPersonName}" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Settings.FilterByGroupName}">
+                        按组名筛选
+                    </CheckBox>
+                    <TextBox Text="{Binding Settings.GroupName}"
+                             IsVisible="{Binding Settings.FilterByGroupName}" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Settings.FilterByLotteryName}">
+                        按奖项筛选
+                    </CheckBox>
+                    <TextBox Text="{Binding Settings.LotteryName}"
+                             IsVisible="{Binding Settings.FilterByLotteryName}" />
+                </StackPanel>
+                
+                <TextBlock Foreground="Gray" TextAlignment="Center" FontStyle="Italic" TextWrapping="Wrap">
+                    注意：本功能暂不支持旧版 SecRandom，需 v2.3.0-beta.2 及以上。
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+    </ci:RuleSettingsControlBase.Resources>
+    
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:LastCalledPersonRuleSettingsControl}}">
+        
+        <Button VerticalAlignment="Center" Theme="{StaticResource TransparentButton}"
+                Click="ButtonShowSettings_OnClick">
+            <ci:IconText Glyph="&#xEF27;" Text="打开设置…"
+                         Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+        </Button>
+    </StackPanel>
+</ci:RuleSettingsControlBase>

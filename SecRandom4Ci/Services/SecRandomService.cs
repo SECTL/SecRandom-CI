@@ -65,11 +65,8 @@ public class SecRandomService : ISecRandomService
 
     public void ShowNotification(NotificationData data)
     {
-        Logger.LogInformation("收到通知消息 {TYPE} 人数 {DRAW_COUNT}", data.ResultType, data.DrawCount);
-        for (var i = 0; i < data.Items.Count; i++)
-        {
-            Logger.LogInformation("--> {INDEX} {NAME}", i, data.Items[i].StudentName);
-        }
+        Logger.LogDebug("收到通知消息 {TYPE} 人数 {DRAW_COUNT} 实际人数 {REAL_COUNT}",
+            data.ResultType, data.DrawCount, data.Items.Count);
 
         LastNotificationData = data;
         WhenReceivedNotification?.Invoke(this, data);
