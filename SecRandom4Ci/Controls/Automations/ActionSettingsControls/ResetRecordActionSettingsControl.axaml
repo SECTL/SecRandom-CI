@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="SecRandom4Ci.Controls.Automations.ActionSettingsControls.ResetRecordActionSettingsControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ci="http://classisland.tech/schemas/xaml/core"
+             xmlns:local="using:SecRandom4Ci.Controls.Automations.ActionSettingsControls"
+             mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="4"
+                DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:ResetRecordActionSettingsControl}}">
+        <TextBlock VerticalAlignment="Center">
+            清空
+        </TextBlock>
+        <ComboBox VerticalAlignment="Center"
+                  SelectedIndex="{Binding Settings.Mode}">
+            <ComboBoxItem><ci:IconText Glyph="&#xECF9;" Text="点名/闪抽"/></ComboBoxItem>
+            <ComboBoxItem><ci:IconText Glyph="&#xED33;" Text="抽奖"/></ComboBoxItem>
+        </ComboBox>
+        <TextBlock VerticalAlignment="Center">
+            的已抽取名单
+        </TextBlock>
+    </StackPanel>
+</UserControl>
