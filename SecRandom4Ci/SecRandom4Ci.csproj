@@ -32,9 +32,4 @@
     <ItemGroup>
       <ProjectReference Include="..\SecRandom4Ci.Interface\SecRandom4Ci.Interface.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\Automations\Actions\" />
-    </ItemGroup>
-
 </Project>

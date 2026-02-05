@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using SecRandom4Ci.Controls.Automations.RuleSettingsControls;
 using SecRandom4Ci.Models.Automations.Rules;
 using SecRandom4Ci.Services;
+using SecRandom4Ci.Services.Automations;
 
 namespace SecRandom4Ci;
 
@@ -27,11 +28,13 @@ public class Plugin : PluginBase
         
         // 注册 ClassIsland 元素
         services.AddNotificationProvider<SecRandomNotificationProvider>();
-        services.AddSingleton<SecRandomService>();
+        services.AddRule<LastCalledPersonRuleSettings, LastCalledPersonRuleSettingsControl>(
+            "secrandom4ci.rules.lastCalledPerson", "SecRandom 上次抽到", "\uECF9");
 
         AppBase.Current.AppStarted += (sender, args) =>
         {
             IAppHost.GetService<SecRandomService>();
+            IAppHost.GetService<RuleHandlerService>().Register();
         };
     }
 }
