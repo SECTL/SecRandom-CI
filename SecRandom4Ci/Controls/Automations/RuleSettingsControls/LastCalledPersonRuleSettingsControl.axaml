@@ -15,7 +15,7 @@
                 <ci:Field Label="结果类型">
                     <ListBox Theme="{StaticResource ChipListBoxTheme}" HorizontalAlignment="Left" SelectionMode="Multiple,Toggle">
                         <ListBoxItem IsSelected="{Binding Settings.OnRollCall}">
-                            <ci:IconText Glyph="&#xED1D;" Text="点名" />
+                            <ci:IconText Glyph="&#xECF9;" Text="点名" />
                         </ListBoxItem>
                         <ListBoxItem IsSelected="{Binding Settings.OnQuickDraw}">
                             <ci:IconText Glyph="&#xED1F;" Text="闪抽" />
@@ -59,7 +59,6 @@
     
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                 DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:LastCalledPersonRuleSettingsControl}}">
-        
         <Button VerticalAlignment="Center" Theme="{StaticResource TransparentButton}"
                 Click="ButtonShowSettings_OnClick">
             <ci:IconText Glyph="&#xEF27;" Text="打开设置…"
