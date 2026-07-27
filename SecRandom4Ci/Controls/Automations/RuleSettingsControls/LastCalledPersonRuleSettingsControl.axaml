@@ -9,7 +9,8 @@
                             xmlns:ruleSettings="using:SecRandom4Ci.Models.Automations.Rules"
                             mc:Ignorable="d">
     <ci:RuleSettingsControlBase.Resources>
-        <ScrollViewer x:Key="SettingsDrawer" x:Shared="False" Width="400"
+        <ScrollViewer x:Key="SettingsDrawer" Width="400"
+                      x:DataType="local:LastCalledPersonRuleSettingsControl"
                       d:DataContext="{d:DesignInstance local:LastCalledPersonRuleSettingsControl}">
             <StackPanel Classes="animated-intro" Spacing="8">
                 <ci:Field Label="结果类型">
@@ -26,7 +27,7 @@
                     </ListBox>
                 </ci:Field>
                 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Spacing="4">
                     <CheckBox IsChecked="{Binding Settings.FilterByPersonName}">
                         按姓名筛选
                     </CheckBox>
@@ -34,7 +35,7 @@
                              IsVisible="{Binding Settings.FilterByPersonName}" />
                 </StackPanel>
                 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Spacing="4">
                     <CheckBox IsChecked="{Binding Settings.FilterByGroupName}">
                         按组名筛选
                     </CheckBox>
@@ -42,7 +43,7 @@
                              IsVisible="{Binding Settings.FilterByGroupName}" />
                 </StackPanel>
                 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Spacing="4">
                     <CheckBox IsChecked="{Binding Settings.FilterByLotteryName}">
                         按奖项筛选
                     </CheckBox>
@@ -50,7 +51,8 @@
                              IsVisible="{Binding Settings.FilterByLotteryName}" />
                 </StackPanel>
                 
-                <TextBlock Foreground="Gray" TextAlignment="Center" FontStyle="Italic" TextWrapping="Wrap">
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           TextAlignment="Center" FontStyle="Italic" TextWrapping="Wrap">
                     注意：本功能暂不支持旧版 SecRandom，需 v2.3.0-beta.2 及以上。
                 </TextBlock>
             </StackPanel>

@@ -85,8 +85,7 @@ public class Plugin : PluginBase
                     },
                     DropdownUseNumbers = true,
                     InlineField = false,
-                    InlineBlock = false,
-                    IsRule = false
+                    InlineBlock = false
                 }
             ],
             Rules =
@@ -151,10 +150,10 @@ public class Plugin : PluginBase
                     },
                     DropdownUseNumbers = false,
                     InlineField = false,
-                    InlineBlock = false,
-                    IsRule = true
+                    InlineBlock = false
                 }
-            ]
+            ],
+            Data = []
         });
     }
 }
