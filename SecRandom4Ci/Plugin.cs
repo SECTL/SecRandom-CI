@@ -14,9 +14,7 @@ using SecRandom4Ci.Models.Automations.Triggers;
 using SecRandom4Ci.Services;
 using SecRandom4Ci.Services.Automations;
 using SecRandom4Ci.Services.Automations.Actions;
-using SuperAutoIsland.Interface;
-using SuperAutoIsland.Interface.MetaData;
-using SuperAutoIsland.Interface.MetaData.ArgsType;
+using SuperAutoIsland.Interface.Metadata;
 using SuperAutoIsland.Interface.Services;
 
 namespace SecRandom4Ci;
@@ -56,104 +54,47 @@ public class Plugin : PluginBase
     
     private static bool IsPluginInstalled(string pkgName, Version? version = null)
     {
-        return IPluginService.LoadedPlugins.Any(info => info.Manifest.Id == pkgName && info.IsEnabled && new Version(info.Manifest.Version) >= version);
+        return IPluginService.LoadedPlugins.Any(info =>
+            info.Manifest.Id == pkgName &&
+            info.IsEnabled &&
+            (version is null || new Version(info.Manifest.Version) >= version));
     }
 
     private static void RegisterSaiBlocks()
     {
         var saiServerService = IAppHost.GetService<ISaiServer>();
-        saiServerService.RegisterBlocks("SecRandom-Ci", new RegisterData
-        {
-            Actions =
-            [
-                new BlockMetadata
+        saiServerService.RegisterBlocks("SecRandom-Ci", it => it
+            .AddBlock(new BlockMetadata("secrandom4ci.actions.resetRecord")
+            {
+                Kind = BlockKind.Action,
+                Name = "重置 SecRandom 记录",
+                Icon = ("删除人员", "\uED09"),
+                Fields = new Dictionary<string, Field>
                 {
-                    Id = "secrandom4ci.actions.resetRecord",
-                    Name = "重置 SecRandom 记录",
-                    Icon = ("删除人员", "\uED09"),
-                    Args = new Dictionary<string, MetaArgsBase>
-                    {
-                        ["Mode"] = new DropDownMetaArgs
-                        {
-                            Name = "",
-                            Type = MetaType.dropdown,
-                            Options = [
-                                ("点名/闪抽", "0"),
-                                ("抽奖", "1")
-                            ]
-                        }
-                    },
-                    DropdownUseNumbers = true,
-                    InlineField = false,
-                    InlineBlock = false
+                    ["Mode"] = BasicFields.Dropdown("", [
+                        ("点名/闪抽", "0"),
+                        ("抽奖", "1")
+                    ], useNumbers: true)
                 }
-            ],
-            Rules =
-            [
-                new BlockMetadata
+            })
+            .AddBlock(new BlockMetadata("secrandom4ci.rules.lastCalledPerson")
+            {
+                Kind = BlockKind.Rule,
+                Name = "SecRandom 上次抽到",
+                Icon = ("人员可用", "\uECF9"),
+                Fields = new Dictionary<string, Field>
                 {
-                    Id = "secrandom4ci.rules.lastCalledPerson",
-                    Name = "SecRandom 上次抽到",
-                    Icon = ("人员可用", "\uECF9"),
-                    Args = new Dictionary<string, MetaArgsBase>
-                    {
-                        ["_string1"] = new CommonMetaArgs
-                        {
-                            Name = "",
-                            Type = MetaType.dummy
-                        },
-                        ["OnRollCall"] = new CommonMetaArgs
-                        {
-                            Name = "包含点名",
-                            Type = MetaType.boolean
-                        },
-                        ["OnQuickDraw"] = new CommonMetaArgs
-                        {
-                            Name = "包含闪抽",
-                            Type = MetaType.boolean
-                        },
-                        ["OnLottery"] = new CommonMetaArgs
-                        {
-                            Name = "包含抽奖",
-                            Type = MetaType.boolean
-                        },
-                        ["FilterByPersonName"] = new CommonMetaArgs
-                        {
-                            Name = "按姓名筛选",
-                            Type = MetaType.boolean
-                        },
-                        ["PersonName"] = new CommonMetaArgs
-                        {
-                            Name = "姓名",
-                            Type = MetaType.text
-                        },
-                        ["FilterByGroupName"] = new CommonMetaArgs
-                        {
-                            Name = "按组名筛选",
-                            Type = MetaType.boolean
-                        },
-                        ["GroupName"] = new CommonMetaArgs
-                        {
-                            Name = "组名",
-                            Type = MetaType.text
-                        },
-                        ["FilterByLotteryName"] = new CommonMetaArgs
-                        {
-                            Name = "按奖项筛选",
-                            Type = MetaType.boolean
-                        },
-                        ["LotteryName"] = new CommonMetaArgs
-                        {
-                            Name = "奖项",
-                            Type = MetaType.text
-                        }
-                    },
-                    DropdownUseNumbers = false,
-                    InlineField = false,
-                    InlineBlock = false
+                    ["_string1"] = BasicFields.Dummy(""),
+                    ["OnRollCall"] = BasicFields.Boolean("包含点名", true),
+                    ["OnQuickDraw"] = BasicFields.Boolean("包含闪抽", true),
+                    ["OnLottery"] = BasicFields.Boolean("包含抽奖", true),
+                    ["FilterByPersonName"] = BasicFields.Boolean("按姓名筛选", true),
+                    ["PersonName"] = BasicFields.Text("姓名", "学生21"),
+                    ["FilterByGroupName"] = BasicFields.Boolean("按组名筛选"),
+                    ["GroupName"] = BasicFields.Text("组名"),
+                    ["FilterByLotteryName"] = BasicFields.Boolean("按奖项筛选"),
+                    ["LotteryName"] = BasicFields.Text("奖项")
                 }
-            ],
-            Data = []
-        });
+            }));
     }
 }
