@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-      <PackageReference Include="dotnetCampus.Ipc" Version="2.0.0-alpha410" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1">
+          <ExcludeAssets>runtime; native</ExcludeAssets>
+      </PackageReference>
+        
+      <PackageReference Include="dotnetCampus.Ipc" Version="2.0.0-alpha410">
+          <ExcludeAssets>runtime; native</ExcludeAssets>
+      </PackageReference>
     </ItemGroup>
     
 </Project>

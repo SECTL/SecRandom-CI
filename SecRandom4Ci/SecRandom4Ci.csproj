@@ -5,13 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>14</LangVersion>
+        <EnableDynamicLoading>True</EnableDynamicLoading>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="ClassIsland.PluginSdk" Version="2.1.1">
             <ExcludeAssets>runtime; native</ExcludeAssets>
         </PackageReference>
-        <PackageReference Include="SuperAutoIsland.Interface" Version="0.3.9-dev.1" />
+        <PackageReference Include="SuperAutoIsland.Interface" Version="0.3.9.1-dev.2" />
     </ItemGroup>
 
     <ItemGroup>

@@ -14,6 +14,7 @@ using SecRandom4Ci.Models.Automations.Triggers;
 using SecRandom4Ci.Services;
 using SecRandom4Ci.Services.Automations;
 using SecRandom4Ci.Services.Automations.Actions;
+using SecRandom4Ci.Services.Automations.Blocks;
 using SuperAutoIsland.Interface.Metadata;
 using SuperAutoIsland.Interface.Services;
 
@@ -80,7 +81,7 @@ public class Plugin : PluginBase
             .AddBlock(new BlockMetadata("secrandom4ci.rules.lastCalledPerson")
             {
                 Kind = BlockKind.Rule,
-                Name = "SecRandom 上次抽到",
+                Name = "SecRandom 上次抽到?",
                 Icon = ("人员可用", "\uECF9"),
                 Fields = new Dictionary<string, Field>
                 {
@@ -95,6 +96,7 @@ public class Plugin : PluginBase
                     ["FilterByLotteryName"] = BasicFields.Boolean("按奖项筛选"),
                     ["LotteryName"] = BasicFields.Text("奖项")
                 }
-            }));
+            })
+            .AddBlock<LastCalledPeopleBlock>());
     }
 }
